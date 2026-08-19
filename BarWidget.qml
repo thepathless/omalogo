@@ -52,9 +52,9 @@ BarWidget {
     onWheelMoved: function(delta) {
       if (!root.bar) return
       if (delta < 0) {
-        root.bar.run("hyprctl dispatch workspace e+1")
+        root.bar.run("hyprctl dispatch " + Util.shellQuote("hl.dsp.focus({ workspace = \"e+1\" })"))
       } else if (delta > 0) {
-        root.bar.run("hyprctl dispatch workspace e-1")
+        root.bar.run("hyprctl dispatch " + Util.shellQuote("hl.dsp.focus({ workspace = \"e-1\" })"))
       }
     }
   }
