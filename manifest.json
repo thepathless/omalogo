@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "omalogo",
+  "name": "OmaLogo",
+  "version": "1.0.0",
+  "author": "suva",
+  "description": "Omarchy app menu logo with scrollable workspace switcher and distro logo picker",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "OmaLogo",
+    "description": "App menu logo with workspace scrolling and distro picker",
+    "category": "Compositor",
+    "allowMultiple": false
+  }
+}
