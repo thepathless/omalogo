@@ -1,38 +1,77 @@
-# OmaLogo
+# OmaLogo 󰣇
 
-A modern, highly customizable application menu launcher and distribution branding widget for the Omarchy status bar.
+An elegant, modern application menu launcher and distribution branding plugin for **[Omarchy](https://omarchy.org/)** (Arch Linux + Hyprland + Quickshell).
 
-## Features
+OmaLogo replaces the status bar logo button with an interactive, multi-purpose widget featuring **Niri-style workspace scrolling** and an embedded **Distribution Logo Picker** supporting 22 Linux and Unix distributions.
 
-- **App Menu Launch**: Left-click to open the native Omarchy command and application menu.
-- **Terminal Shortcut**: Right-click to immediately spawn the default terminal emulator.
-- **Distribution Branding**: Middle-click to choose from 22 curated distribution logos with real-time search filtering.
-- **Workspace Navigation**: Scroll over the widget to cycle through active workspaces forward and backward.
-- **State Persistence**: Selected branding persists across reboots and shell reloads in `~/.config/omarchy/shell.json`.
+---
 
-## Interactions
+<p align="center">
+  <img src="./assets/preview.png" alt="OmaLogo Preview" width="600" />
+</p>
+
+---
+
+## ⚡ One-Command Installation
+
+To install and immediately enable OmaLogo on your Omarchy status bar:
+
+```bash
+omarchy plugin add https://github.com/thepathless/omalogo.git --enable
+```
+
+> [!TIP]
+> You can update the plugin at any time with:
+> ```bash
+> omarchy plugin update omalogo
+> ```
+
+---
+
+## ✨ Features
+
+- **App Menu Launch**: Left-click to summon the native Omarchy application and command menu.
+- **Terminal Shortcut**: Right-click to immediately launch the default terminal emulator.
+- **Distribution Branding**: Middle-click to choose from 22 distribution logos (Omarchy, Arch, Debian, Ubuntu, Fedora, NixOS, Gentoo, Void, Alpine, openSUSE, Manjaro, Mint, EndeavourOS, Pop!_OS, Kali, Artix, FreeBSD, Red Hat, Rocky, AlmaLinux, CentOS, Tux).
+- **Workspace Scrolling**: Scroll up or down on the logo to navigate between active Hyprland workspaces forward and backward (Niri-style).
+- **Clean Typography**: Dynamic tooltip showing the active distribution name (`Arch`, `Omarchy`, `Fedora`, `Tux`, etc.).
+- **Zero-Drift State Persistence**: Your selected distribution logo is automatically persisted in `~/.config/omarchy/shell.json`.
+
+---
+
+## 🎮 Interactions
 
 | Action | Function |
 | :--- | :--- |
-| **Left Click** | Open Omarchy Application Menu |
-| **Right Click** | Launch Terminal |
-| **Middle Click** | Open Distribution Logo Picker |
-| **Mouse Scroll Up** | Previous Workspace (`hl.dsp.focus({ workspace = "e-1" })`) |
-| **Mouse Scroll Down** | Next Workspace (`hl.dsp.focus({ workspace = "e+1" })`) |
+| **Left-Click** | Open Omarchy Application Menu |
+| **Right-Click** | Launch Default Terminal |
+| **Middle-Click** | Open Distribution Logo Picker |
+| **Scroll Down** | Next Workspace (`hl.dsp.focus({ workspace = "e+1" })`) |
+| **Scroll Up** | Previous Workspace (`hl.dsp.focus({ workspace = "e-1" })`) |
 
-## Installation
+---
 
-Symlink into the Omarchy plugins directory:
+## 🛠️ Configuration
 
-```bash
-ln -s ~/Projects/omamenu ~/.config/omarchy/plugins/omalogo
-```
-
-Add or replace `omarchy.menu` in `~/.config/omarchy/shell.json` under `bar.layout.left`:
+To manually position or configure OmaLogo in `~/.config/omarchy/shell.json`:
 
 ```json
 {
-  "id": "omalogo",
-  "distro": "arch"
+  "bar": {
+    "layout": {
+      "left": [
+        {
+          "id": "omalogo",
+          "distro": "arch"
+        }
+      ]
+    }
+  }
 }
 ```
+
+---
+
+## 📄 License
+
+MIT License. Designed with ❤️ for the Omarchy Linux desktop.
