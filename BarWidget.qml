@@ -36,7 +36,7 @@ BarWidget {
     text: root.currentDistro ? root.currentDistro.icon : "\ue900"
     fontFamily: (root.currentDistro && root.currentDistro.font === "omarchy") ? "omarchy" : (root.bar ? root.bar.fontFamily : Style.font.family)
     horizontalMargin: 7.5
-    tooltipText: (root.currentDistro ? root.currentDistro.name : "Omarchy") + " • Middle-click: change logo • Scroll: switch workspace"
+    tooltipText: (root.currentDistro ? root.currentDistro.name : "Omarchy") + " Menu"
 
     onPressed: function(btn) {
       if (!root.bar) return
@@ -60,13 +60,13 @@ BarWidget {
   }
 
   // -------------------------------------------------------------
-  // Distro Logo Picker Popup
+  // Distribution Logo Picker
   // -------------------------------------------------------------
   PopupCard {
     id: distroPickerPopup
     anchorItem: root
     bar: root.bar
-    contentWidth: Style.space(340)
+    contentWidth: Style.space(320)
     contentHeight: fittedContentHeight(popupLayout.implicitHeight)
     open: false
     triggerMode: "click"
@@ -79,23 +79,31 @@ BarWidget {
       // Header Row
       Row {
         width: parent.width
-        spacing: Style.spacing.sm
+        spacing: Style.spacing.md
 
-        Text {
-          text: root.currentDistro ? root.currentDistro.icon : "\ue900"
-          font.family: (root.currentDistro && root.currentDistro.font === "omarchy") ? "omarchy" : Style.font.family
-          font.pixelSize: Style.font.title
-          color: Color.accent
+        BorderSurface {
+          width: Style.space(36)
+          height: Style.space(36)
+          radius: Style.cornerRadius
+          color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.12)
           anchors.verticalCenter: parent.verticalCenter
+
+          Text {
+            anchors.centerIn: parent
+            text: root.currentDistro ? root.currentDistro.icon : "\ue900"
+            font.family: (root.currentDistro && root.currentDistro.font === "omarchy") ? "omarchy" : Style.font.family
+            font.pixelSize: Style.font.title
+            color: Color.accent
+          }
         }
 
         Column {
-          width: parent.width - Style.space(64)
+          width: parent.width - Style.space(76)
           spacing: 1
           anchors.verticalCenter: parent.verticalCenter
 
           Text {
-            text: "Distro Logo"
+            text: "Application Logo"
             color: Color.foreground
             font.family: Style.font.family
             font.pixelSize: Style.font.subtitle
@@ -103,7 +111,7 @@ BarWidget {
           }
 
           Text {
-            text: "Choose a logo for your status bar"
+            text: "Select status bar branding"
             color: Color.muted
             font.family: Style.font.family
             font.pixelSize: Style.font.caption
@@ -120,16 +128,16 @@ BarWidget {
 
       PanelSeparator { foreground: Color.foreground }
 
-      // Search Bar
+      // Search Field
       TextField {
         id: searchField
         width: parent.width
-        placeholderText: "Search distros..."
-        font.pixelSize: Style.font.caption
+        placeholderText: "Search distributions..."
+        font.pixelSize: Style.font.bodySmall || Style.font.caption
         onTextChanged: distroList.filterText = text
       }
 
-      // Distro List
+      // Distribution Catalog List
       Item {
         id: distroList
         width: parent.width
@@ -155,7 +163,7 @@ BarWidget {
             height: Style.space(32)
             radius: Style.cornerRadius
             color: isCurrent
-              ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.18)
+              ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.16)
               : (isHovered ? Qt.rgba(Color.foreground.r, Color.foreground.g, Color.foreground.b, 0.08) : "transparent")
 
             Row {
@@ -165,7 +173,7 @@ BarWidget {
               spacing: Style.spacing.md
 
               Text {
-                width: Style.space(24)
+                width: Style.space(22)
                 text: modelData.icon
                 font.family: modelData.font === "omarchy" ? "omarchy" : Style.font.family
                 font.pixelSize: Style.font.title
@@ -175,7 +183,7 @@ BarWidget {
               }
 
               Text {
-                width: parent.width - Style.space(60)
+                width: parent.width - Style.space(56)
                 text: modelData.name
                 font.family: Style.font.family
                 font.pixelSize: Style.font.body
@@ -212,20 +220,13 @@ BarWidget {
 
       PanelSeparator { foreground: Color.foreground }
 
-      // Footer Hint
+      // Footer Navigation Summary
       Row {
         width: parent.width
         spacing: Style.spacing.xs
 
         Text {
-          text: "💡"
-          font.family: Style.font.family
-          font.pixelSize: Style.font.caption
-          anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Text {
-          text: "Scroll on logo to cycle workspaces (Niri-style)"
+          text: "Left-click: Apps  •  Right-click: Terminal  •  Scroll: Workspaces"
           color: Color.muted
           font.family: Style.font.family
           font.pixelSize: Style.font.caption
