@@ -36,7 +36,7 @@ BarWidget {
     text: root.currentDistro ? root.currentDistro.icon : "\ue900"
     fontFamily: (root.currentDistro && root.currentDistro.font === "omarchy") ? "omarchy" : (root.bar ? root.bar.fontFamily : Style.font.family)
     horizontalMargin: 7.5
-    tooltipText: (root.currentDistro ? root.currentDistro.name : "Omarchy") + " Menu"
+    tooltipText: root.currentDistro ? root.currentDistro.name : "Omarchy"
 
     onPressed: function(btn) {
       if (!root.bar) return
@@ -66,7 +66,7 @@ BarWidget {
     id: distroPickerPopup
     anchorItem: root
     bar: root.bar
-    contentWidth: Style.space(320)
+    contentWidth: Style.space(300)
     contentHeight: fittedContentHeight(popupLayout.implicitHeight)
     open: false
     triggerMode: "click"
@@ -128,28 +128,17 @@ BarWidget {
 
       PanelSeparator { foreground: Color.foreground }
 
-      // Search Field
-      TextField {
-        id: searchField
-        width: parent.width
-        placeholderText: "Search distributions..."
-        font.pixelSize: Style.font.bodySmall || Style.font.caption
-        onTextChanged: distroList.filterText = text
-      }
-
       // Distribution Catalog List
       Item {
         id: distroList
         width: parent.width
-        height: Math.min(Style.space(240), distroListView.contentHeight)
-        property string filterText: ""
-        property var items: DistroModel.filterDistros(filterText)
+        height: Math.min(Style.space(260), distroListView.contentHeight)
 
         ListView {
           id: distroListView
           anchors.fill: parent
           clip: true
-          model: distroList.items
+          model: DistroModel.allDistros()
           spacing: Style.space(2)
 
           delegate: BorderSurface {
