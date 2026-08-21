@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import qs.Commons
 import qs.Ui
 import "DistroModel.js" as DistroModel

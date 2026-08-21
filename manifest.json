@@ -4,6 +4,7 @@
   "name": "OmaLogo",
   "version": "1.0.0",
   "author": "suva",
+  "license": "MIT",
   "description": "Application menu button with custom distribution branding and workspace switching",
   "kinds": [
     "bar-widget"
@@ -15,6 +16,7 @@
     "displayName": "App Menu",
     "description": "Launches the application menu with distribution branding and workspace scrolling",
     "category": "Compositor",
-    "allowMultiple": false
+    "allowMultiple": false,
+    "defaultSection": "left"
   }
 }

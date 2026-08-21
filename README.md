@@ -28,6 +28,16 @@ omarchy plugin add https://github.com/thepathless/omalogo.git --enable
 
 ---
 
+## 🗑️ Removal
+
+To safely remove OmaLogo from your status bar and system:
+
+```bash
+omarchy plugin remove omalogo
+```
+
+---
+
 ## ✨ Features
 
 - **App Menu Launch**: Left-click to summon the native Omarchy application and command menu.
