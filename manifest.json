@@ -13,10 +13,23 @@
     "barWidget": "BarWidget.qml"
   },
   "barWidget": {
-    "displayName": "App Menu",
+    "displayName": "OmaLogo",
     "description": "Launches the application menu with distribution branding and workspace scrolling",
-    "category": "Compositor",
+    "category": "Desktop",
     "allowMultiple": false,
-    "defaultSection": "left"
-  }
+    "defaultSection": "left",
+    "defaults": {
+      "distro": "arch"
+    },
+    "schema": [
+      {
+        "key": "distro",
+        "type": "string",
+        "label": "Distribution Logo",
+        "defaultValue": "arch",
+        "description": "Selected distribution icon shown on the status bar (e.g. arch, omarchy, debian, fedora, tux)."
+      }
+    ]
+  },
+  "repository": "https://github.com/thepathless/omalogo"
 }

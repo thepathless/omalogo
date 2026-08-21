@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
+import Quickshell.Io
 import qs.Commons
 import qs.Ui
 import "DistroModel.js" as DistroModel
@@ -10,6 +12,12 @@ BarWidget {
 
   property string currentDistroKey: root.setting("distro", "arch")
   readonly property var currentDistro: DistroModel.findDistro(currentDistroKey)
+
+  readonly property bool opened: distroPickerPopup.open
+
+  function open() { distroPickerPopup.open = true }
+  function close() { distroPickerPopup.open = false }
+  function toggle() { distroPickerPopup.open = !distroPickerPopup.open }
 
   function updateDistro(key) {
     root.currentDistroKey = key
@@ -23,6 +31,15 @@ BarWidget {
     if (root.bar && root.bar.shell && typeof root.bar.shell.updateEntryInline === "function") {
       root.bar.shell.updateEntryInline(root.moduleName, entry)
     }
+  }
+
+  IpcHandler {
+    target: "omalogo"
+    function open(): void { root.open() }
+    function close(): void { root.close() }
+    function toggle(): void { root.toggle() }
+    function setDistro(name: string): void { root.updateDistro(name) }
+    function current(): string { return root.currentDistroKey }
   }
 
   implicitWidth: button.implicitWidth
@@ -42,7 +59,7 @@ BarWidget {
       if (btn === Qt.RightButton) {
         root.bar.run("xdg-terminal-exec")
       } else if (btn === Qt.MiddleButton) {
-        distroPickerPopup.open = !distroPickerPopup.open
+        root.toggle()
       } else {
         root.bar.run("omarchy-shell shell toggle omarchy.menu '{\"menu\":\"root\"}'")
       }
@@ -65,6 +82,7 @@ BarWidget {
     id: distroPickerPopup
     anchorItem: root
     bar: root.bar
+    owner: root
     contentWidth: Style.space(300)
     contentHeight: fittedContentHeight(popupLayout.implicitHeight)
     open: false
@@ -90,6 +108,7 @@ BarWidget {
           Text {
             anchors.centerIn: parent
             text: root.currentDistro ? root.currentDistro.icon : "\ue900"
+            textFormat: Text.PlainText
             font.family: (root.currentDistro && root.currentDistro.font === "omarchy") ? "omarchy" : Style.font.family
             font.pixelSize: Style.font.title
             color: Color.accent
@@ -103,6 +122,7 @@ BarWidget {
 
           Text {
             text: "Application Logo"
+            textFormat: Text.PlainText
             color: Color.foreground
             font.family: Style.font.family
             font.pixelSize: Style.font.subtitle
@@ -111,6 +131,7 @@ BarWidget {
 
           Text {
             text: "Select status bar branding"
+            textFormat: Text.PlainText
             color: Color.muted
             font.family: Style.font.family
             font.pixelSize: Style.font.caption
@@ -163,6 +184,7 @@ BarWidget {
               Text {
                 width: Style.space(22)
                 text: modelData.icon
+                textFormat: Text.PlainText
                 font.family: modelData.font === "omarchy" ? "omarchy" : Style.font.family
                 font.pixelSize: Style.font.title
                 color: itemRow.isCurrent ? Color.accent : Color.foreground
@@ -173,6 +195,7 @@ BarWidget {
               Text {
                 width: parent.width - Style.space(56)
                 text: modelData.name
+                textFormat: Text.PlainText
                 font.family: Style.font.family
                 font.pixelSize: Style.font.body
                 font.bold: itemRow.isCurrent
@@ -184,6 +207,7 @@ BarWidget {
               Text {
                 visible: itemRow.isCurrent
                 text: "✓"
+                textFormat: Text.PlainText
                 font.family: Style.font.family
                 font.pixelSize: Style.font.body
                 font.bold: true
@@ -215,6 +239,7 @@ BarWidget {
 
         Text {
           text: "Left-click: Apps  •  Right-click: Terminal  •  Scroll: Workspaces"
+          textFormat: Text.PlainText
           color: Color.muted
           font.family: Style.font.family
           font.pixelSize: Style.font.caption
